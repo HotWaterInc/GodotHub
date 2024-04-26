@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  HotWaterCLI
-//
-//  Created by Rus Alexandru on 11.04.2024.
-//
-
 #include <iostream>
 #include <cstdlib>
 #include "json.hpp"
