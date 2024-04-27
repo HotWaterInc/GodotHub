@@ -1,0 +1,8 @@
+#ifndef GODOTHUB_ACTION_DISPATCHER_H
+#define GODOTHUB_ACTION_DISPATCHER_H
+
+
+void dispatch_action();
+
+
+#endif //GODOTHUB_ACTION_DISPATCHER_H
