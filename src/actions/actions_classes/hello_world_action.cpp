@@ -18,10 +18,9 @@ void HelloWorldAction::execute() {
 //	std::vector<std::string> answers = {"yes", "no"};
 //	std::string response = (*request_response)("Answer question with one of the following:", answers, answers[0]);
 	
-	int godot = task_check_path("godot");
-	int pt = task_check_path("cargo");
-	std::cout << "godot: " << godot << std::endl;
-	std::cout << "cargo: " << pt << std::endl;
+	int godot_present = task_check_in_path("godot");
+	std::string base_path_godot = "~/godot";
+	std::string base_path_project = "~/godot/projects/project1";
 	
 }
 
