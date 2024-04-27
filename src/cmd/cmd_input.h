@@ -1,5 +1,5 @@
-#ifndef GODOTHUB_CMD_IO_H
-#define GODOTHUB_CMD_IO_H
+#ifndef GODOTHUB_CMD_INPUT_H
+#define GODOTHUB_CMD_INPUT_H
 
 #include "action_dispatch/action_dispatch_params.h"
 #include "actions/actions_enum.h"
@@ -19,4 +19,4 @@ public:
 	
 };
 
-#endif //GODOTHUB_CMD_IO_H
+#endif //GODOTHUB_CMD_INPUT_H

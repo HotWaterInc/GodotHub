@@ -22,16 +22,21 @@ add_executable(GodotHub
         src/action_dispatch/action_dispatcher.cpp
         src/action_dispatch/action_dispatcher.h
         src/actions/action_abstract.h
-        src/actions/tasks/task_abstract.cpp
-        src/actions/tasks/task_abstract.h
         src/action_dispatch/action_dispatch_params.h
         src/actions/actions_enum.cpp
         src/actions/actions_enum.h
-        src/actions/hello_world_action.cpp
-        src/actions/hello_world_action.h
+        src/actions/actions_classes/hello_world_action.cpp
+        src/actions/actions_classes/hello_world_action.h
         src/actions/action_field_types.h
-        src/actions/create_file.cpp
-        src/actions/create_file.h
+        src/actions/actions_classes/create_file.cpp
+        src/actions/actions_classes/create_file.h
         src/action_dispatch/validate_params.cpp
         src/action_dispatch/validate_params.h
+        src/cmd/abstract_IO.h
+        src/tasks/tasks.cpp
+        src/tasks/tasks.h
+        src/cmd/cmd_request_response.cpp
+        src/cmd/IO_singleton.cpp
+        src/cmd/IO_singleton.h
+        src/cmd/cmd_request_response.h
 )

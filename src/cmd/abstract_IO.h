@@ -1,12 +1,9 @@
-//
-// Created by eugene on 27.04.2024.
-//
-
-#ifndef GODOTHUB_ABSTRACT_INPUT_H
-#define GODOTHUB_ABSTRACT_INPUT_H
+#ifndef GODOTHUB_ABSTRACT_IO_H
+#define GODOTHUB_ABSTRACT_IO_H
 
 #include "action_dispatch/action_dispatch_params.h"
 #include "actions/actions_enum.h"
+#include <bits/stdc++.h>
 
 typedef std::map<std::string, std::string> ParamsMap;
 
@@ -20,5 +17,6 @@ public:
 	
 };
 
+using RequestResponseCallback = std::string (*)(std::string, std::vector<std::string>, std::string);
 
-#endif //GODOTHUB_ABSTRACT_INPUT_H
+#endif //GODOTHUB_ABSTRACT_IO_H

@@ -5,9 +5,9 @@
 #ifndef GODOTHUB_CREATE_FILE_H
 #define GODOTHUB_CREATE_FILE_H
 
-#include "action_abstract.h"
+#include "actions/action_abstract.h"
 #include <bits/stdc++.h>
-#include "action_field_types.h"
+#include "actions/action_field_types.h"
 
 class CreateFileAction : public ActionAbstract {
 public:
@@ -24,6 +24,7 @@ public:
 	void inject_params(ActionDispatchParams dependencies) override;
 };
 
-extern ActionDependencies create_file_action_dependencies;
+extern ActionDependencies create_file_action_dependencies_required;
+extern ActionDependencies create_file_action_dependencies_optional;
 
 #endif //GODOTHUB_CREATE_FILE_H

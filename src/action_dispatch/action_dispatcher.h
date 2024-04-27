@@ -4,7 +4,7 @@
 #include "action_dispatch_params.h"
 
 
-void dispatch_action(ActionDispatchParams dispatch_params);
+void dispatch_action(ActionDispatchParams &dispatch_params);
 
 
 #endif //GODOTHUB_ACTION_DISPATCHER_H

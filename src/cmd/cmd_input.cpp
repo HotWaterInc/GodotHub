@@ -4,7 +4,7 @@
 #include <vector>
 #include "action_dispatch/action_dispatch_params.h"
 #include <stdexcept>
-#include "cmd_IO.h"
+#include "cmd_input.h"
 #include "actions/actions_enum.h"
 #include "actions/actions_classes/hello_world_action.h"
 #include "actions/actions_classes/create_file.h"
@@ -25,6 +25,7 @@ CmdInput::CmdInput() {
 		create_file[key] = key;
 	}
 	
+	// bindings between CLI and actions for all actions and params
 	paramsNameMaps["hello"] = hello;
 	paramsNameMaps["create_file"] = create_file;
 	

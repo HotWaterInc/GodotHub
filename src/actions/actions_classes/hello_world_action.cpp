@@ -1,6 +1,8 @@
 #include "hello_world_action.h"
 #include <bits/stdc++.h>
-#include "action_abstract.h"
+#include "actions/action_abstract.h"
+#include "cmd/IO_singleton.h"
+#include "tasks/tasks.h"
 
 
 HelloWorldAction::HelloWorldAction() {
@@ -11,16 +13,18 @@ HelloWorldAction::~HelloWorldAction() = default;
 
 
 void HelloWorldAction::execute() {
-	std::cout << "Hello, World Action ran!" << std::endl;
-	std::cout << "Hello string: " << hello_string << std::endl;
+	RequestResponseCallback request_response = SingletonIO::getInstance().get_request_response_callback();
+
+//	std::vector<std::string> answers = {"yes", "no"};
+//	std::string response = (*request_response)("Answer question with one of the following:", answers, answers[0]);
+	
+	int godot = task_check_path("godot");
+	int pt = task_check_path("cargo");
+	std::cout << "godot: " << godot << std::endl;
+	std::cout << "cargo: " << pt << std::endl;
+	
 }
 
-std::string HelloWorldAction::callback(std::string question, std::string answers[], std::string default_answer) {
-	std::cout << question << std::endl;
-	std::string answer;
-	std::cin >> answer;
-	return answer;
-}
 
 std::map<std::string, ActionFieldTypes> hello_world_action_dependencies = {
 		{"hello_string", ActionFieldTypes::STRING},

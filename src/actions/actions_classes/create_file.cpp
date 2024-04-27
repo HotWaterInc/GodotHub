@@ -4,9 +4,15 @@
 
 #include "create_file.h"
 
-std::map<std::string, ActionFieldTypes> create_file_action_dependencies = {
+
+std::map<std::string, ActionFieldTypes> create_file_action_dependencies_required = {
 		{"file_name",    ActionFieldTypes::STRING},
 		{"file_content", ActionFieldTypes::STRING},
+};
+
+std::map<std::string, ActionFieldTypes> create_file_action_dependencies_optional = {
+		{"file_int",    ActionFieldTypes::INT},
+		{"other_stuff", ActionFieldTypes::STRING},
 };
 
 CreateFileAction::CreateFileAction() = default;

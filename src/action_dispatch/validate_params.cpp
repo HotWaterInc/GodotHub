@@ -28,7 +28,7 @@ bool validate_parameter_value(std::string param_value, ActionFieldTypes field_ty
 	return true;
 };
 
-bool parameter_exists(std::string param_name, ActionDependencies dependencies) {
+bool parameter_exists(const std::string &param_name, ActionDependencies dependencies) {
 	// search in dependencies
 	if (dependencies.find(param_name) == dependencies.end()) {
 		return false;
@@ -46,7 +46,7 @@ void validate_params(ActionDispatchParams dispatch_params) {
 			break;
 		}
 		case ActionsEnum::CREATE_FILE: {
-			dependencies = create_file_action_dependencies;
+			dependencies = create_file_action_dependencies_required;
 			break;
 		}
 	}
