@@ -2,29 +2,34 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "action_dispatch_params.h"
+#include "action_dispatch/action_dispatch_params.h"
 #include <stdexcept>
 #include "cmd_input.h"
-
+#include "actions/actions_enum.h"
+#include "actions/hello_world_action.h"
+#include "actions/create_file.h"
 
 CmdInput::CmdInput() {
 	// bindings between CLI and actions and params names
 	// We map all of these in order to completely decouple the CLI from the internal action and parameter names
 	// This way we can change the internal names without affecting the CLI, and vice versa
 	
-	std::map<std::string, std::string> hello;
-	hello["hello"] = "hello_action";
-	hello["param1"] = "param1_action";
-	hello["param2"] = "param2_action";
+	// we just create keys for the CLI name
+	ParamsMap hello;
+	for (auto const &[key, val]: hello_world_action_dependencies) {
+		hello[key] = key;
+	}
 	
-	bindings["hello"] = hello;
+	ParamsMap create_file;
+	for (auto const &[key, val]: create_file_action_dependencies) {
+		create_file[key] = key;
+	}
 	
-	std::map<std::string, std::string> goodbye;
-	goodbye["goodbye"] = "goodbye_action";
-	goodbye["param1"] = "param1_action";
-	goodbye["param2"] = "param2_action";
+	paramsNameMaps["hello"] = hello;
+	paramsNameMaps["create_file"] = create_file;
 	
-	bindings["goodbye"] = goodbye;
+	actionTypes["hello"] = ActionsEnum::HELLO_WORLD;
+	actionTypes["create_file"] = ActionsEnum::CREATE_FILE;
 }
 
 ActionDispatchParams CmdInput::parse_input(int argc, const char **argv) {
@@ -34,15 +39,15 @@ ActionDispatchParams CmdInput::parse_input(int argc, const char **argv) {
 	}
 	
 	ActionDispatchParams dispatch_params;
-	
 	std::string cli_action_name = argv[1];
-	std::string action_name = bindings[cli_action_name][cli_action_name];
 	
-	if (action_name.empty()) {
+	bool valid_action = actionTypes.find(cli_action_name) != actionTypes.end();
+	if (!valid_action) {
 		throw std::runtime_error("Invalid CLI action name");
 	}
 	
-	dispatch_params.action_name = action_name;
+	ActionsEnum action_type = actionTypes[cli_action_name];
+	dispatch_params.action_type = action_type;
 	
 	for (int i = 2; i < argc; i++) {
 		// param=value format, extract name and value, maps it into struct
@@ -60,10 +65,10 @@ ActionDispatchParams CmdInput::parse_input(int argc, const char **argv) {
 			throw std::runtime_error("Invalid parameter format, Usage: [param1]=[value1] ...");
 		}
 		
-		std::string param_name = bindings[cli_action_name][cli_param_name];
+		std::string param_name = paramsNameMaps[cli_action_name][cli_param_name];
 		
 		if (param_name.empty()) {
-			throw std::runtime_error("Invalid CLI parameter name");
+			throw std::runtime_error("Invalid CLI parameter name" + cli_param_name);
 		}
 		
 		dispatch_params.params_values[param_name] = cli_param_value;

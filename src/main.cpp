@@ -1,8 +1,9 @@
 #include <iostream>
-#include <cstdlib>
-#include "json.hpp"
+#include "libraries/json.hpp"
 #include <fstream>
 #include "cmd/cmd_input.h"
+#include "action_dispatch/action_dispatch_params.h"
+#include "action_dispatch/validate_params.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -10,11 +11,14 @@ using json = nlohmann::json;
 
 int main(int argc, const char *argv[]) {
 	// here we set up the entire workflow
-	
 	CmdInput cmd_input;
 	
+	// dispatch params contain action type and params in the string form
 	ActionDispatchParams dispatch_params = cmd_input.parse_input(argc, argv);
-	std::cout << dispatch_params.action_name << std::endl;
+	// dispatch params has action type and strings for the action parameters
+	// we need to convert the strings and check the types, as well as execute the actions
+	validate_params(dispatch_params);
+	
 	
 	return 0;
 }
