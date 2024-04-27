@@ -9,20 +9,19 @@
 #include <bits/stdc++.h>
 #include "action_field_types.h"
 
-class CreateFile : public ActionAbstract {
+class CreateFileAction : public ActionAbstract {
 public:
-	CreateFile();
+	CreateFileAction();
 	
-	~CreateFile();
-	
-	void execute() override;
-	
-	static std::string callback(std::string question, std::string answers[], std::string default_answer);
+	~CreateFileAction();
 	
 	std::string file_name;
 	
 	std::string file_content;
 	
+	void execute() override;
+	
+	void inject_params(ActionDispatchParams dependencies) override;
 };
 
 extern ActionDependencies create_file_action_dependencies;

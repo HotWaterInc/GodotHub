@@ -4,10 +4,10 @@
 #include <vector>
 #include "action_dispatch/action_dispatch_params.h"
 #include <stdexcept>
-#include "cmd_input.h"
+#include "cmd_IO.h"
 #include "actions/actions_enum.h"
-#include "actions/hello_world_action.h"
-#include "actions/create_file.h"
+#include "actions/actions_classes/hello_world_action.h"
+#include "actions/actions_classes/create_file.h"
 
 CmdInput::CmdInput() {
 	// bindings between CLI and actions and params names
@@ -21,7 +21,7 @@ CmdInput::CmdInput() {
 	}
 	
 	ParamsMap create_file;
-	for (auto const &[key, val]: create_file_action_dependencies) {
+	for (auto const &[key, val]: create_file_action_dependencies_required) {
 		create_file[key] = key;
 	}
 	

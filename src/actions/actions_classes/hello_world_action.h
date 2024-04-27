@@ -12,6 +12,8 @@ public:
 	
 	~HelloWorldAction();
 	
+	void inject_params(ActionDispatchParams dispatch_params);
+	
 	void execute() override;
 	
 	static std::string callback(std::string question, std::string answers[], std::string default_answer);

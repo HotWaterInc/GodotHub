@@ -1,0 +1,8 @@
+//
+// Created by eugene on 27.04.2024.
+//
+
+#ifndef GODOTHUB_CMD_REQUEST_RESPONSE_H
+#define GODOTHUB_CMD_REQUEST_RESPONSE_H
+
+#endif //GODOTHUB_CMD_REQUEST_RESPONSE_H
