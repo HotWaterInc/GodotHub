@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(src)
 
+
 add_executable(GodotHub
         src/libraries/json.hpp
         src/main.cpp
@@ -39,4 +40,15 @@ add_executable(GodotHub
         src/cmd/IO_singleton.cpp
         src/cmd/IO_singleton.h
         src/cmd/cmd_request_response.h
+)
+
+add_custom_command(
+    TARGET GodotHub PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_SOURCE_DIR}/file_templates/SConstruct_template
+        ${CMAKE_CURRENT_BINARY_DIR}/SConstruct_template
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_SOURCE_DIR}/file_templates/mod_template.gdextension
+        ${CMAKE_CURRENT_BINARY_DIR}/mod_template.gdextension
+    COMMAND ${CMAKE_COMMAND} -E echo "This will run before building MyApp"
 )
