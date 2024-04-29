@@ -45,10 +45,10 @@ add_executable(GodotHub
 add_custom_command(
     TARGET GodotHub PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_SOURCE_DIR}/file_templates/SConstruct_template
+        ${CMAKE_SOURCE_DIR}/SConstruct_template
         ${CMAKE_CURRENT_BINARY_DIR}/SConstruct_template
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_SOURCE_DIR}/file_templates/mod_template.gdextension
+        ${CMAKE_SOURCE_DIR}/mod_template.gdextension
         ${CMAKE_CURRENT_BINARY_DIR}/mod_template.gdextension
     COMMAND ${CMAKE_COMMAND} -E echo "This will run before building MyApp"
 )
