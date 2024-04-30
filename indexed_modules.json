@@ -1,0 +1,16 @@
+{
+  "indexed_modules": [
+    {
+      "name": "mod1",
+      "repository": "https://github.com/HotWaterInc/test_module1.git"
+    },
+    {
+      "name": "mod2",
+      "repository": ""
+    },
+    {
+      "name": "mod3",
+      "repository": ""
+    }
+  ]
+}
