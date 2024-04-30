@@ -7,9 +7,10 @@
 
 #include <string>
 
-enum ActionsEnum {
+enum ActionsEnum
+{
 	HELLO_WORLD,
-	CREATE_FILE,
+	ADD_MODULE,
 };
 
 std::string get_action_name(ActionsEnum action);

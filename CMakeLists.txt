@@ -29,8 +29,6 @@ add_executable(GodotHub
         src/actions/actions_classes/hello_world_action.cpp
         src/actions/actions_classes/hello_world_action.h
         src/actions/action_field_types.h
-        src/actions/actions_classes/create_file.cpp
-        src/actions/actions_classes/create_file.h
         src/action_dispatch/validate_params.cpp
         src/action_dispatch/validate_params.h
         src/cmd/abstract_IO.h
@@ -40,6 +38,12 @@ add_executable(GodotHub
         src/cmd/IO_singleton.cpp
         src/cmd/IO_singleton.h
         src/cmd/cmd_request_response.h
+        src/actions/actions_classes/add_module_action.h
+        src/actions/actions_classes/add_module_action.cpp
+        src/common_types.h
+        src/utils/utils.cpp
+        src/utils/utils.h
+        src/actions/registered_actions.h
 )
 
 add_custom_command(

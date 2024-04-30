@@ -6,21 +6,24 @@
 #include "actions/action_field_types.h"
 #include "action_dispatch/action_dispatch_params.h"
 
-class HelloWorldAction : public ActionAbstract {
+class HelloWorldAction : public ActionAbstract
+{
 public:
-	 HelloWorldAction() = default;
+	HelloWorldAction() = default;
 
 	void inject_params(ActionDispatchParams dispatch_params) override;
-	
+
 	void execute() override;
-	
+
 
 	int hello_int{0};
 
 	std::string hello_string{"0"};
-
 };
 
-extern ActionDependencies hello_world_action_dependencies;
+extern ActionDependenciesRequiredDependencies hello_world_action_required_dependencies;
+extern ActionDependenciesOptionalDependencies hello_world_action_optional_dependencies;
+extern ActionDependenciesTypeConstraints hello_world_action_type_constraints;
+extern ActionDependenciesValueConstraints hello_world_action_value_constraints;
 
 #endif
