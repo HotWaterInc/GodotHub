@@ -54,7 +54,8 @@ void validate_params(ActionDispatchParams dispatch_params) {
 	for (auto const &param_name: dispatch_params.registered_params) {
 		ActionFieldTypes field_type = dependencies[param_name];
 		std::string param_value = dispatch_params.params_values[param_name];
-		
+		std::cout << "Validating param: " << param_name << " with value: " << param_value << std::endl;
+
 		if (!parameter_exists(param_name, dependencies)) {
 			throw std::runtime_error("Parameter: " + param_name + " does not exist in action dependencies");
 		}

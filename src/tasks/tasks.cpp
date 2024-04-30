@@ -9,3 +9,9 @@ bool task_check_in_path(std::string application) {
 	int result = system(command);
 	return result == 0;
 }
+
+std::string task_get_user_home_path()
+{
+	const char* path = getenv("HOME");
+    return path ? std::string(path) : std::string();
+}

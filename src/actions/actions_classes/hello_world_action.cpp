@@ -21,7 +21,9 @@ void request_response_example()
 	std::string response = (*request_response)("Answer question with one of the following:", answers, answers[0]);
 }
 
-void HelloWorldAction::execute() {
+void build_modules_example()
+{
+
 	std::string base_path = "/home/eugen/godot_projects";
 	std::string project_name = "project1";
 	std::string mod_name = "mod1";
@@ -95,6 +97,13 @@ void HelloWorldAction::execute() {
 	std::cout<<"Command executed"<<std::endl;
 }
 
+void HelloWorldAction::execute() {
+	std::string aux;
+	aux = task_get_user_home_path();
+	std::cout << "User home path: " << aux << std::endl;
+
+}
+
 
 std::map<std::string, ActionFieldTypes> hello_world_action_dependencies = {
 		{"hello_string", ActionFieldTypes::STRING},
@@ -102,6 +111,14 @@ std::map<std::string, ActionFieldTypes> hello_world_action_dependencies = {
 };
 
 void HelloWorldAction::inject_params(ActionDispatchParams dispatch_params) {
-	hello_string = dispatch_params.params_values["hello_string"];
-	hello_int = std::stoi(dispatch_params.params_values["hello_int"]);
+	std::vector<std::string> *registered_params = &dispatch_params.registered_params;
+	// check if there because they are optional
+	auto found_position = std::find(registered_params->begin(), registered_params->end(), "hello_string");
+	if (found_position != registered_params->end()) {
+		hello_string = dispatch_params.params_values["hello_string"];
+	}
+	found_position = std::find(registered_params->begin(), registered_params->end(), "hello_int");
+	if (found_position != registered_params->end()) {
+		hello_int = std::stoi(dispatch_params.params_values["hello_int"]);
+	}
 }
