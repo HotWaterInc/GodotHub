@@ -2,30 +2,20 @@
 #include "action_dispatch_params.h"
 #include <bits/stdc++.h>
 
-#include "actions/actions_classes/add_module_action.h"
-#include "actions/actions_classes/hello_world_action.h"
+#include "actions/registered_actions.h"
+#include "actions/actions_switch_cases.h"
 
 void dispatch_action(const ActionDispatchParams& dispatch_params)
 {
 	// at this point we know all params exist and are valid types
 	ActionsEnum action_type = dispatch_params.action_type;
-	std::cout << "Action type: " << action_type << std::endl;
-	ActionAbstract* action = nullptr;
-	switch (action_type)
+	std::unique_ptr<ActionAbstract> action = get_action_object(action_type);
+
+	if (action == nullptr)
 	{
-	case ActionsEnum::HELLO_WORLD:
-		{
-			HelloWorldAction* hello_world_action = new HelloWorldAction();
-			action = hello_world_action;
-			break;
-		}
-	case ActionsEnum::ADD_MODULE:
-		{
-			AddModuleAction* create_file_action = new AddModuleAction();
-			action = create_file_action;
-			break;
-		}
+		throw std::runtime_error("Action not found");
 	}
+
 	action->inject_params(dispatch_params);
 	action->execute();
 };

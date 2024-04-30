@@ -28,7 +28,6 @@ add_executable(GodotHub
         src/actions/actions_enum.h
         src/actions/actions_classes/hello_world_action.cpp
         src/actions/actions_classes/hello_world_action.h
-        src/actions/action_field_types.h
         src/action_dispatch/validate_params.cpp
         src/action_dispatch/validate_params.h
         src/cmd/abstract_IO.h
@@ -44,25 +43,29 @@ add_executable(GodotHub
         src/utils/utils.cpp
         src/utils/utils.h
         src/actions/registered_actions.h
+        src/actions/actions_classes/remove_module_action.cpp
+        src/actions/actions_classes/remove_module_action.h
+        src/actions/actions_switch_cases.cpp
+        src/actions/actions_switch_cases.h
 )
 
 add_custom_command(
-    TARGET GodotHub PRE_BUILD
+        TARGET GodotHub PRE_BUILD
         # Copy all the templates
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_SOURCE_DIR}/SConstruct_template
         ${CMAKE_CURRENT_BINARY_DIR}/SConstruct_template
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_SOURCE_DIR}/mod_template.gdextension
         ${CMAKE_CURRENT_BINARY_DIR}/mod_template.gdextension
 
         # Copy all the configs
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_SOURCE_DIR}/configs.json
         ${CMAKE_CURRENT_BINARY_DIR}/configs.json
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_SOURCE_DIR}/indexed_modules.json
         ${CMAKE_CURRENT_BINARY_DIR}/indexed_modules.json
 
-    COMMAND ${CMAKE_COMMAND} -E echo "Copied all necessary files and configs to the build directory."
+        COMMAND ${CMAKE_COMMAND} -E echo "Copied all necessary files and configs to the build directory."
 )

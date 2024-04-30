@@ -6,16 +6,22 @@
 #define GODOTHUB_ACTIONS_ENUM_H
 
 #include <string>
+#include <map>
 
 enum ActionsEnum
 {
 	HELLO_WORLD,
 	ADD_MODULE,
+	REMOVE_MODULE,
 };
 
-std::string get_action_name(ActionsEnum action);
+enum ActionFieldTypes
+{
+	INT,
+	STRING,
+};
 
-ActionsEnum get_action_enum(std::string action_name);
 
+extern std::map<ActionsEnum, std::string> actions_map;
 
 #endif //GODOTHUB_ACTIONS_ENUM_H

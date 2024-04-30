@@ -6,9 +6,9 @@
 #define GODOTHUB_ACTION_ABSTRACT_H
 
 #include <bits/stdc++.h>
-#include "action_field_types.h"
 #include "common_types.h"
 #include "action_dispatch/action_dispatch_params.h"
+#include "actions/actions_enum.h"
 
 class ActionAbstract
 {

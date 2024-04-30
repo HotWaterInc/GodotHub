@@ -27,15 +27,14 @@ void AddModuleAction::runtime_params_check()
 		throw std::runtime_error("Project name: " + project_name + " does not exist");
 	}
 
-
-	StringVector project_modules = task_get_project_modules("");
-	StringVector indexed_modules_names = task_get_indexed_modules_names();
+	StringVector project_modules = task_get_project_modules(project_name);
 
 	if (find_string_in_vector(module_name, project_modules) == true)
 	{
-		throw std::runtime_error("Module name: " + module_name + " already exists in project");
+		throw std::runtime_error("Module name: " + module_name + " already exist in project");
 	}
 
+	StringVector indexed_modules_names = task_get_indexed_modules_names();
 	if (find_string_in_vector(module_name, indexed_modules_names) == false)
 	{
 		throw std::runtime_error("Module name: " + module_name + " does not exist in indexed modules");
@@ -52,7 +51,7 @@ void AddModuleAction::inject_params(ActionDispatchParams dispatch_params)
 
 void AddModuleAction::execute()
 {
-	std::cout << "Adding module: " << module_name << " to project: " << project_name << std::endl;
+	std::cout << "Adding module: " << module_name << " from project: " << project_name << std::endl;
 
 	task_add_module_to_project_JSON(module_name, project_name);
 	task_add_module_necessary_configs(module_name, project_name);

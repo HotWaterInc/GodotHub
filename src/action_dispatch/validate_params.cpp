@@ -2,8 +2,9 @@
 #include "action_dispatch_params.h"
 #include <bits/stdc++.h>
 
-#include "actions/actions_classes/add_module_action.h"
 #include "utils/utils.h"
+#include "actions/registered_actions.h"
+#include "actions/actions_switch_cases.h"
 
 void validate_paramater_possible_values(std::string param_value, StringVector possible_values)
 {
@@ -63,25 +64,8 @@ void validate_params(ActionDispatchParams dispatch_params)
 	ActionDependenciesTypeConstraints type_constraints;
 	ActionDependenciesValueConstraints value_constraints;
 
-	switch (dispatch_params.action_type)
-	{
-	case ActionsEnum::HELLO_WORLD:
-		{
-			dependencies = hello_world_action_required_dependencies;
-			optional_dependencies = hello_world_action_optional_dependencies;
-			type_constraints = hello_world_action_type_constraints;
-			value_constraints = hello_world_action_value_constraints;
-			break;
-		}
-	case ActionsEnum::ADD_MODULE:
-		{
-			dependencies = add_module_action_required_dependencies;
-			optional_dependencies = add_module_action_optional_dependencies;
-			type_constraints = add_module_action_type_constraints;
-			value_constraints = add_module_action_value_constraints;
-			break;
-		}
-	}
+	populate_action_dependencies(dispatch_params.action_type, dependencies, optional_dependencies,
+	                             type_constraints, value_constraints);
 
 	// check if all required params are present
 	for (auto const& param_name : dependencies)

@@ -12,9 +12,12 @@
 CmdInput::CmdInput()
 {
 	// bindings between CLI and actions and params names
+	// if we expand to more IO's a decoupling is needed between all of them and the actions names
 
-	actionTypes["hello"] = ActionsEnum::HELLO_WORLD;
-	actionTypes["add_module"] = ActionsEnum::ADD_MODULE;
+	for (auto const& [key, val] : actions_map)
+	{
+		actionTypes[val] = key;
+	}
 }
 
 ActionDispatchParams CmdInput::parse_input(int argc, const char** argv)
@@ -31,7 +34,13 @@ ActionDispatchParams CmdInput::parse_input(int argc, const char** argv)
 	bool valid_action = actionTypes.find(cli_action_name) != actionTypes.end();
 	if (!valid_action)
 	{
-		throw std::runtime_error("Invalid CLI action name");
+		// valid CLI action names
+		std::cout << "Valid actions are: " << std::endl;
+		for (auto const& [key, val] : actionTypes)
+		{
+			std::cout << key << std::endl;
+		}
+		throw std::runtime_error("Invalid action name: " + cli_action_name);
 	}
 
 	ActionsEnum action_type = actionTypes[cli_action_name];

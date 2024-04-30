@@ -194,6 +194,12 @@ StringVector task_get_project_modules(std::string project_name)
 	std::ifstream f(PROJECTS_JSON);
 	json file_data = json::parse(f);
 	json data = file_data[project_name]["modules"];
+
+	if (file_data[project_name].empty())
+	{
+		throw std::runtime_error("Project name: " + project_name + " does not exist");
+	}
+
 	StringVector modules;
 
 	for (json::iterator it = data.begin(); it != data.end(); ++it)
@@ -219,6 +225,12 @@ StringVector task_get_projects()
 	return projects;
 }
 
+void task_remove_Sconstruct()
+{
+	std::string base_path = task_get_user_home_path() + "/" + task_get_hub_folder_name();
+	std::string sconstruct_output_path = base_path + "/SConstruct";
+	delete_file(sconstruct_output_path);
+}
 
 std::string task_request_response(std::string question, StringVector answers, std::string default_answer)
 {
