@@ -8,12 +8,6 @@
 #include <sstream>
 #include <cstdlib>
 
-HelloWorldAction::HelloWorldAction() {
-	// std::cout << "HelloWorldAction constructor" << std::endl;
-}
-
-HelloWorldAction::~HelloWorldAction() = default;
-
 void request_response_example()
 {
 	RequestResponseCallback request_response = SingletonIO::getInstance().get_request_response_callback();
@@ -98,9 +92,8 @@ void build_modules_example()
 }
 
 void HelloWorldAction::execute() {
-	std::string aux;
-	aux = task_get_user_home_path();
-	std::cout << "User home path: " << aux << std::endl;
+	std::string base_path = task_get_user_home_path();
+	std::cout << "User home path: " << base_path << std::endl;
 
 }
 

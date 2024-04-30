@@ -8,17 +8,19 @@
 
 class HelloWorldAction : public ActionAbstract {
 public:
-	HelloWorldAction();
-	
-	~HelloWorldAction();
-	
+	 HelloWorldAction() = default;
+
 	void inject_params(ActionDispatchParams dispatch_params) override;
 	
 	void execute() override;
 	
-	std::string hello_string;
-	
-	int hello_int;
+
+	int hello_int{0};
+
+	std::string hello_string{"0"};
+
+private:
+	~HelloWorldAction() = default;
 	
 };
 
