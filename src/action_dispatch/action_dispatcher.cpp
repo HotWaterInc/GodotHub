@@ -4,7 +4,7 @@
 #include "actions/actions_classes/hello_world_action.h"
 #include "actions/actions_classes/create_file.h"
 
-void dispatch_action(ActionDispatchParams &dispatch_params) {
+void dispatch_action(const ActionDispatchParams &dispatch_params) {
 	// at this point we know all params exist and are valid types
 	ActionsEnum action_type = dispatch_params.action_type;
 	switch (action_type) {

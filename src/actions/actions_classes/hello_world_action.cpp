@@ -8,12 +8,8 @@
 #include <sstream>
 #include <cstdlib>
 
-void request_response_example()
-{
-	RequestResponseCallback request_response = SingletonIO::getInstance().get_request_response_callback();
-	std::vector<std::string> answers = {"yes", "no"};
-	std::string response = (*request_response)("Answer question with one of the following:", answers, answers[0]);
-}
+#include "action_dispatch/action_dispatcher.h"
+
 
 void build_modules_example()
 {
@@ -93,8 +89,25 @@ void build_modules_example()
 
 void HelloWorldAction::execute() {
 	std::string base_path = task_get_user_home_path();
-	std::cout << "User home path: " << base_path << std::endl;
+	std::cout << "User home path: " << base_path << " " << hello_int << std::endl;
 
+	std::string response = task_request_response("Do you want to repeat?", {"yes", "no"}, "yes");
+
+	if(response == "yes") {
+		std::cout << "Repeating" << std::endl;
+	} else {
+		std::cout << "Not repeating" << std::endl;
+		return;
+	}
+
+	// recursion test
+	ActionDispatchParams dispatch_params;
+	dispatch_params.action_type = ActionsEnum::HELLO_WORLD;
+	dispatch_params.registered_params = {"hello_string", "hello_int"};
+	std::string incremented_int = std::to_string(hello_int + 1);
+	dispatch_params.params_values = {{"hello_string", "hello"}, {"hello_int", incremented_int}};
+
+	dispatch_action(dispatch_params);
 }
 
 

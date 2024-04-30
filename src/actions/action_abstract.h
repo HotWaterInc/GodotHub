@@ -15,8 +15,8 @@ public:
 	
 	ActionAbstract() = default;
 	
-	~ActionAbstract() = default;
-	
+	virtual ~ActionAbstract() = default;
+
 	virtual void execute() = 0;
 	
 	virtual void inject_params(ActionDispatchParams dependencies) = 0;

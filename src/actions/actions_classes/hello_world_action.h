@@ -19,9 +19,6 @@ public:
 
 	std::string hello_string{"0"};
 
-private:
-	~HelloWorldAction() = default;
-	
 };
 
 extern ActionDependencies hello_world_action_dependencies;
