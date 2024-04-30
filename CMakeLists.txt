@@ -50,5 +50,9 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_SOURCE_DIR}/mod_template.gdextension
         ${CMAKE_CURRENT_BINARY_DIR}/mod_template.gdextension
-    COMMAND ${CMAKE_COMMAND} -E echo "This will run before building MyApp"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_SOURCE_DIR}/configs.json
+        ${CMAKE_CURRENT_BINARY_DIR}/configs.json
+
+    COMMAND ${CMAKE_COMMAND} -E echo "Copied all necessary files and configs to the build directory."
 )
