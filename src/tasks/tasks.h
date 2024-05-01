@@ -40,4 +40,7 @@ void task_create_new_folder(const std::string&);
 void task_clone_repository_branch(const std::string&, const std::string&, const std::string&);
 void task_remove_folder(const std::string&);
 
+void task_create_new_file(const std::string&, const std::string&);
+void task_add_project_to_JSON(const std::string&);
+
 #endif //GODOTHUB_TASKS_H

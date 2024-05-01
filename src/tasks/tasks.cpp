@@ -190,6 +190,16 @@ void task_add_module_compile_module() {
 	std::cout << "Module compiled successfully" << std::endl;
 }
 
+void task_add_project_to_JSON(const std::string& project_name) {
+	std::ifstream f(PROJECTS_JSON);
+	json file_data = json::parse(f);
+	file_data[project_name] = json::object();
+	file_data[project_name]["modules"] = json::array();
+	file_data[project_name]["project_name"] = project_name;
+	std::ofstream o(PROJECTS_JSON);
+	o << std::setw(4) << file_data << std::endl;
+}
+
 StringVector task_get_project_modules(std::string project_name) {
 	std::ifstream f(PROJECTS_JSON);
 	json file_data = json::parse(f);
@@ -236,7 +246,7 @@ void task_create_new_folder(const std::string& folder_path) {
 	}
 }
 
-void task_create_new_file(std::string file_path, std::string content) {
+void task_create_new_file(const std::string& file_path, const std::string& content) {
 	std::ofstream outfile(file_path);
 	outfile << content;
 	outfile.close();

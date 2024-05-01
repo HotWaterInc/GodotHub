@@ -45,6 +45,12 @@ void populate_action_dependencies(ActionsEnum action_type,
 		type_constraints = initialize_structure_action_type_constraints;
 		value_constraints = initialize_structure_action_value_constraints;
 	}
+	case ActionsEnum::CREATE_PROJECT: {
+		dependencies = create_project_action_required_dependencies;
+		optional_dependencies = create_project_action_optional_dependencies;
+		type_constraints = create_project_action_type_constraints;
+		value_constraints = create_project_action_value_constraints;
+	}
 	}
 }
 
@@ -70,6 +76,9 @@ std::unique_ptr<ActionAbstract> get_action_object(ActionsEnum action_type) {
 		break;
 	case ActionsEnum::INITIALIZE_STRUCTURE:
 		action = std::make_unique<InitializeStructureAction>();
+		break;
+	case ActionsEnum::CREATE_PROJECT:
+		action = std::make_unique<CreateProjectAction>();
 		break;
 	}
 

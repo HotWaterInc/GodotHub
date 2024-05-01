@@ -11,5 +11,6 @@
 #include <actions/actions_classes/install_godot_action.h>
 #include <actions/actions_classes/install_prerequisites_action.h>
 #include <actions/actions_classes/initialize_structure_action.h>
+#include <actions/actions_classes/create_project_action.h>
 
 #endif //ACTIONS_REGISTERED_H

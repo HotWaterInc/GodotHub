@@ -44,6 +44,8 @@ add_executable(GodotHub
         src/actions/actions_classes/install_prerequisites_action.h
         src/actions/actions_classes/initialize_structure_action.cpp
         src/actions/actions_classes/initialize_structure_action.h
+        src/actions/actions_classes/create_project_action.cpp
+        src/actions/actions_classes/create_project_action.h
 )
 
 add_custom_command(

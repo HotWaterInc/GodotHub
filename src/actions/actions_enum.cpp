@@ -7,5 +7,6 @@ std::map<ActionsEnum, std::string> actions_map = {
 	{INSTALL_GODOT, "install_godot"},
 	{INSTALL_PREREQUISITES, "install_prerequisites"},
 	{INITIALIZE_STRUCTURE, "initialize_structure"},
+	{CREATE_PROJECT, "create_project"}
 };
 
