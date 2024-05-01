@@ -11,15 +11,6 @@ add_executable(GodotHub
         src/main.cpp
         src/cmd/cmd_input.cpp
         src/cmd/cmd_input.h
-        src/configs/configs_loader.cpp
-        src/indexed_data/project_data.h
-        src/indexed_data/project_data.cpp
-        src/indexed_data/save_data.cpp
-        src/indexed_data/save_data.h
-        src/indexed_data/load_data.cpp
-        src/indexed_data/load_data.h
-        src/configs/config.cpp
-        src/configs/config.h
         src/action_dispatch/action_dispatcher.cpp
         src/action_dispatch/action_dispatcher.h
         src/actions/action_abstract.h
@@ -47,6 +38,8 @@ add_executable(GodotHub
         src/actions/actions_classes/remove_module_action.h
         src/actions/actions_switch_cases.cpp
         src/actions/actions_switch_cases.h
+        src/actions/actions_classes/install_godot_action.cpp
+        src/actions/actions_classes/install_godot_action.h
 )
 
 add_custom_command(

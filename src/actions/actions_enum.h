@@ -13,6 +13,7 @@ enum ActionsEnum
 	HELLO_WORLD,
 	ADD_MODULE,
 	REMOVE_MODULE,
+	INSTALL_GODOT,
 };
 
 enum ActionFieldTypes

@@ -27,6 +27,12 @@ void populate_action_dependencies(ActionsEnum action_type,
 		value_constraints = remove_module_action_value_constraints;
 		break;
 	}
+	case ActionsEnum::INSTALL_GODOT: {
+		dependencies = install_godot_action_required_dependencies;
+		optional_dependencies = install_godot_action_optional_dependencies;
+		type_constraints = install_godot_action_type_constraints;
+		value_constraints = install_godot_action_value_constraints;
+	}
 	}
 }
 
@@ -43,6 +49,9 @@ std::unique_ptr<ActionAbstract> get_action_object(ActionsEnum action_type) {
 		break;
 	case ActionsEnum::REMOVE_MODULE:
 		action = std::make_unique<RemoveModuleAction>();
+		break;
+	case ActionsEnum::INSTALL_GODOT:
+		action = std::make_unique<InstallGodotAction>();
 		break;
 	}
 

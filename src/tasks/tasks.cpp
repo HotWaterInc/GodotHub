@@ -222,7 +222,7 @@ bool check_file_exists(std::string file_path) {
 	return f.good();
 }
 
-bool task_add_software_to_path(const std::string& software_path) {
+void task_add_software_to_path(const std::string& software_path) {
 	const std::string home_path = task_get_user_home_path();
 
 	std::string final_software_path = software_path;
@@ -235,21 +235,34 @@ bool task_add_software_to_path(const std::string& software_path) {
 	std::ofstream bashrc(bashrc_path, std::ios_base::app);
 	if (!bashrc.is_open()) {
 		std::cerr << "Failed to open .bashrc" << std::endl;
-		return false;
+		return;
 	}
 
 	bashrc << software_export_command << std::endl;
 	bashrc.close();
 	std::cout << "Path added to .bashrc successfully" << std::endl;
-
-	return true;
 }
 
 void task_install_godot() {
-	run_command("wget https://downloads.tuxfamily.org/godotengine/4.2.2/Godot_v4.2.2-stable_linux_headless.64.zip");
-	run_command("unzip Godot_v4.2.2-stable_linux_headless.64.zip");
-	run_command("chmod +x Godot_v4.2.2-stable_linux_headless.64");
-	run_command("mv Godot_v4.2.2-stable_linux_headless.64 /usr/local/bin/godot");
+	std::string godot_zip_name = "Godot_v4.2.2-stable_linux.x86_64.zip";
+	std::string godot_file_name = "Godot_v4.2.2-stable_linux.x86_64";
+	// std::string full = "https://downloads.tuxfamily.org/godotengine/4.2.2/Godot_v4.2.2-stable_linux.x86_64.zip";
+
+	run_command("wget https://downloads.tuxfamily.org/godotengine/4.2.2/" + godot_zip_name);
+	run_command("unzip " + godot_zip_name);
+	run_command("chmod +x " + godot_file_name);
+
+	// rename the file to "godot"
+	run_command("mv " + godot_file_name + " godot");
+
+	// create folder godot in ~
+	run_command("mkdir -p ~/godot");
+	std::string move_command = "mv godot ~/godot";
+	run_command(move_command);
+
+	// delete files
+	run_command("rm " + godot_zip_name);
+	run_command("rm -rf " + godot_file_name);
 }
 
 void task_source_bashrc() {
@@ -275,7 +288,8 @@ void echo_command(std::string command) {
 }
 
 void write_to_json() {
-	task_add_software_to_path("~/godot");
+	// task_install_godot();
+	// task_add_software_to_path("~/godot");
 	// task_source_bashrc();
 }
 

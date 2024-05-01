@@ -30,4 +30,8 @@ StringVector task_get_projects();
 void task_remove_module_from_project_JSON(std::string, std::string);
 void task_remove_module_necessary_configs(std::string, std::string);
 
+void task_install_godot();
+void task_add_software_to_path(const std::string&);
+void task_source_bashrc();
+
 #endif //GODOTHUB_TASKS_H

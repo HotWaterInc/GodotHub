@@ -5,6 +5,7 @@ bool find_string_in_vector(const std::string& str, const StringVector& vec) {
 }
 
 int run_command(const std::string& command) {
+    // same as system but uses bash
     std::string fullCommand = "bash -c '" + command + "'";
     int res = system(fullCommand.c_str());
     return res;
