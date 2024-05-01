@@ -20,28 +20,23 @@ void InitializeStructureAction::inject_params(ActionDispatchParams dispatch_para
 void InitializeStructureAction::execute() {
 	std::string hub_folder = task_get_hub_folder_name();
 	std::string home_path = task_get_user_home_path();
+	std::string hub_full_path = home_path + "/" + hub_folder;
 
 	// check if folder exists
-	bool folder_exists = task_check_folder_exists(hub_folder);
+	bool folder_exists = task_check_folder_exists(hub_full_path);
 	if (folder_exists) {
 		std::string response = task_request_response(
-			"Hub folder already exists. Are you sure you want to continue? This will only delete and reinstall godot-cpp",
+			"Hub folder already exists. Are you sure you want to continue? This will delete everything including your projects and cloned modules. Proceed with caution",
 			{"yes", "no"}, "yes");
 
 		if (response == "no") {
 			return;
 		}
+		task_remove_folder(hub_full_path);
 	}
 
-	std::cout << home_path + "/" + hub_folder << std::endl;
-
-	if (!folder_exists) {
-		task_create_new_folder(home_path + "/" + hub_folder);
-	}
-	if (folder_exists) {
-		task_remove_folder(home_path + "/" + hub_folder + "/" + "godot-cpp");
-	}
-
+	task_create_new_folder(hub_full_path);
+	task_create_new_folder(hub_full_path + "/godot-cpp");
 	task_clone_repository_branch("https://github.com/godotengine/godot-cpp", "4.2",
-	                             home_path + "/" + hub_folder);
+	                             hub_full_path + "/godot-cpp");
 }

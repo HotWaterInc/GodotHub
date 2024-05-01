@@ -229,7 +229,11 @@ void task_remove_Sconstruct() {
 
 void task_create_new_folder(const std::string& folder_path) {
 	std::string command = "mkdir -p " + folder_path;
-	run_command(command);
+	std::cout << command << std::endl;
+	int res = run_command(command);
+	if (res != 0) {
+		std::cerr << "Failed to create folder" << std::endl;
+	}
 }
 
 void task_create_new_file(std::string file_path, std::string content) {
