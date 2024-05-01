@@ -8,7 +8,7 @@
 #include<common_types.h>
 #include <bits/stdc++.h>
 
-bool find_string_in_vector(const std::string &str, const StringVector &vec);
-
+bool find_string_in_vector(const std::string& str, const StringVector& vec);
+int run_command(const std::string& command);
 
 #endif //UTILS_H

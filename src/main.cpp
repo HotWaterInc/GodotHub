@@ -13,11 +13,9 @@ enum IOTypes
 	CMD,
 };
 
-void setup_io(IOTypes io_type)
-{
+void setup_io(IOTypes io_type) {
 	//	CmdInput cmd_input;
-	switch (io_type)
-	{
+	switch (io_type) {
 	case CMD:
 		CmdInput* cmd_input = new CmdInput();
 		SingletonIO::getInstance().set_input(cmd_input);
@@ -26,10 +24,9 @@ void setup_io(IOTypes io_type)
 	}
 }
 
-int main(int argc, const char* argv[])
-{
-	// write_to_json();
-	// return 0;
+int main(int argc, const char* argv[]) {
+	write_to_json();
+	return 0;
 
 	// here we set up the entire workflow, can be either CMD based or GUI based or whatever based
 	setup_io(IOTypes::CMD);

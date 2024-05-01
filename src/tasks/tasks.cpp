@@ -1,4 +1,5 @@
 #include "tasks.h"
+
 #include <bits/stdc++.h>
 #include <cstdlib>
 #include <iostream>
@@ -7,9 +8,11 @@
 #include "cmd/IO_singleton.h"
 #include "constants.h"
 #include "common_types.h"
+#include <sys/stat.h>
 
-bool task_check_in_path(std::string application)
-{
+#include "utils/utils.h"
+
+bool task_check_in_path(std::string application) {
 	std::string commandString = "which " + application + " > /dev/null 2>&1";
 	const char* command = commandString.c_str();
 
@@ -17,36 +20,31 @@ bool task_check_in_path(std::string application)
 	return result == 0;
 }
 
-std::string task_get_user_home_path()
-{
+std::string task_get_user_home_path() {
 	const char* path = getenv("HOME");
 	return path ? std::string(path) : std::string();
 }
 
-std::string task_get_platform()
-{
+std::string task_get_platform() {
 	std::ifstream f(CONFIGS_JSON);
 	json data = json::parse(f);
 	return data["platform"];
 }
 
-std::string task_get_hub_folder_name()
-{
+std::string task_get_hub_folder_name() {
 	std::ifstream f(CONFIGS_JSON);
 	json data = json::parse(f);
 	return data["project_folder"];
 }
 
-std::vector<ModuleStruct> task_get_indexed_modules()
-{
+std::vector<ModuleStruct> task_get_indexed_modules() {
 	std::ifstream f(INDEXED_MODULES_JSON);
 	json file_data = json::parse(f);
 	json data = json::parse(file_data["indexed_modules"].dump());
 	std::vector<ModuleStruct> modules;
 
 	int index = 0;
-	for (json::iterator it = data.begin(); it != data.end(); ++it, index++)
-	{
+	for (json::iterator it = data.begin(); it != data.end(); ++it, index++) {
 		std::string name = data[index]["name"];
 		std::string repository = data[index]["repository"];
 		ModuleStruct module = {name, repository};
@@ -57,16 +55,14 @@ std::vector<ModuleStruct> task_get_indexed_modules()
 }
 
 
-StringVector task_get_indexed_modules_names()
-{
+StringVector task_get_indexed_modules_names() {
 	std::ifstream f(INDEXED_MODULES_JSON);
 	json file_data = json::parse(f);
 	json data = file_data["indexed_modules"];
 	StringVector names;
 
 	int index = 0;
-	for (json::iterator it = data.begin(); it != data.end(); ++it, index++)
-	{
+	for (json::iterator it = data.begin(); it != data.end(); ++it, index++) {
 		std::string value = data[index]["name"];
 		names.push_back(value);
 	}
@@ -74,8 +70,7 @@ StringVector task_get_indexed_modules_names()
 	return names;
 }
 
-void task_add_module_to_project_JSON(std::string module_name, std::string project_name)
-{
+void task_add_module_to_project_JSON(std::string module_name, std::string project_name) {
 	std::ifstream f(PROJECTS_JSON);
 	json file_data = json::parse(f);
 
@@ -88,8 +83,7 @@ void task_add_module_to_project_JSON(std::string module_name, std::string projec
 	o << std::setw(4) << file_data << std::endl;
 }
 
-std::string read_file_buffer(std::string file_path)
-{
+std::string read_file_buffer(std::string file_path) {
 	std::ifstream sconstruct_file(file_path);
 	std::stringstream sconstruct_buffer;
 	sconstruct_buffer << sconstruct_file.rdbuf();
@@ -98,30 +92,25 @@ std::string read_file_buffer(std::string file_path)
 	return sconstruct_content;
 }
 
-void replace_all(std::string& str, const std::string& from, const std::string& to)
-{
+void replace_all(std::string& str, const std::string& from, const std::string& to) {
 	size_t start_pos = 0;
-	while ((start_pos = str.find(from, start_pos)) != std::string::npos)
-	{
+	while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
 		str.replace(start_pos, from.length(), to);
 		start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
 	}
 }
 
-void write_file(std::string file_path, std::string content)
-{
+void write_file(std::string file_path, std::string content) {
 	std::ofstream outfile(file_path);
 	outfile << content;
 	outfile.close();
 }
 
-void delete_file(std::string file_path)
-{
+void delete_file(std::string file_path) {
 	std::remove(file_path.c_str());
 }
 
-void task_add_module_necessary_configs(std::string mod_name, std::string project_name)
-{
+void task_add_module_necessary_configs(std::string mod_name, std::string project_name) {
 	//builds up necessary templates data, Sconstruct and gd extension
 	std::string base_path = task_get_user_home_path() + "/" + task_get_hub_folder_name();
 
@@ -145,8 +134,7 @@ void task_add_module_necessary_configs(std::string mod_name, std::string project
 	write_file(gdextension_output_path, gdextension_content);
 }
 
-void task_remove_module_from_project_JSON(std::string module_name, std::string project_name)
-{
+void task_remove_module_from_project_JSON(std::string module_name, std::string project_name) {
 	std::ifstream f(PROJECTS_JSON);
 	json file_data = json::parse(f);
 
@@ -159,8 +147,7 @@ void task_remove_module_from_project_JSON(std::string module_name, std::string p
 	o << std::setw(4) << file_data << std::endl;
 }
 
-void task_remove_module_necessary_configs(std::string mod_name, std::string project_name)
-{
+void task_remove_module_necessary_configs(std::string mod_name, std::string project_name) {
 	std::string base_path = task_get_user_home_path() + "/" + task_get_hub_folder_name();
 	std::string gdextension_output_path = base_path + "/" + project_name + "/bin/" + mod_name + ".gdextension";
 	std::string lib_output_path = base_path + "/" + project_name + "/bin/" + "lib" + mod_name +
@@ -174,14 +161,12 @@ void task_remove_module_necessary_configs(std::string mod_name, std::string proj
 	delete_file(lib_output_path);
 }
 
-void task_add_module_compile_module()
-{
+void task_add_module_compile_module() {
 	std::string base_path = task_get_user_home_path() + "/" + task_get_hub_folder_name();
 	std::string command = "cd " + base_path + " && scons platform=linux";
 	int result = system(command.c_str());
 
-	if (result != 0)
-	{
+	if (result != 0) {
 		std::cout << "Error compiling module" << std::endl;
 		return;
 	}
@@ -189,21 +174,18 @@ void task_add_module_compile_module()
 	std::cout << "Module compiled successfully" << std::endl;
 }
 
-StringVector task_get_project_modules(std::string project_name)
-{
+StringVector task_get_project_modules(std::string project_name) {
 	std::ifstream f(PROJECTS_JSON);
 	json file_data = json::parse(f);
 	json data = file_data[project_name]["modules"];
 
-	if (file_data[project_name].empty())
-	{
+	if (file_data[project_name].empty()) {
 		throw std::runtime_error("Project name: " + project_name + " does not exist");
 	}
 
 	StringVector modules;
 
-	for (json::iterator it = data.begin(); it != data.end(); ++it)
-	{
+	for (json::iterator it = data.begin(); it != data.end(); ++it) {
 		std::string value = *it;
 		modules.push_back(value);
 	}
@@ -211,38 +193,91 @@ StringVector task_get_project_modules(std::string project_name)
 	return modules;
 }
 
-StringVector task_get_projects()
-{
+StringVector task_get_projects() {
 	std::ifstream f(PROJECTS_JSON);
 	json file_data = json::parse(f);
 	StringVector projects;
 
-	for (auto& el : file_data.items())
-	{
+	for (auto& el : file_data.items()) {
 		projects.push_back(el.key());
 	}
 
 	return projects;
 }
 
-void task_remove_Sconstruct()
-{
+void task_remove_Sconstruct() {
 	std::string base_path = task_get_user_home_path() + "/" + task_get_hub_folder_name();
 	std::string sconstruct_output_path = base_path + "/SConstruct";
 	delete_file(sconstruct_output_path);
 }
 
-std::string task_request_response(std::string question, StringVector answers, std::string default_answer)
-{
+void task_create_new_file(std::string file_path, std::string content) {
+	std::ofstream outfile(file_path);
+	outfile << content;
+	outfile.close();
+}
+
+bool check_file_exists(std::string file_path) {
+	std::ifstream f(file_path);
+	return f.good();
+}
+
+bool task_add_software_to_path(const std::string& software_path) {
+	const std::string home_path = task_get_user_home_path();
+
+	std::string final_software_path = software_path;
+	replace_all(final_software_path, "~", home_path);
+
+	std::string software_export_command = "export PATH=\"$PATH:" + final_software_path + "\"";
+	std::string bashrc_path = home_path + std::string("/.bashrc");
+
+	// apped more
+	std::ofstream bashrc(bashrc_path, std::ios_base::app);
+	if (!bashrc.is_open()) {
+		std::cerr << "Failed to open .bashrc" << std::endl;
+		return false;
+	}
+
+	bashrc << software_export_command << std::endl;
+	bashrc.close();
+	std::cout << "Path added to .bashrc successfully" << std::endl;
+
+	// Change permission of the file to ensure it's executable
+	std::string source_command = "source " + bashrc_path;
+	int res = system(source_command.c_str());
+	std::cout << res << std::endl;
+	if (res == -1) {
+		std::cerr << "Failed to source the file" << std::endl;
+		return false;
+	}
+
+	return true;
+}
+
+void task_source_bashrc() {
+	const std::string home_path = task_get_user_home_path();
+	std::string bashrc_path = home_path + std::string("/.bashrc");
+	std::string source_command = "source " + bashrc_path;
+
+	int res = run_command(source_command);
+	if (res == -1) {
+		std::cerr << "Failed to source the file" << std::endl;
+	}
+}
+
+
+std::string task_request_response(std::string question, StringVector answers, std::string default_answer) {
 	RequestResponseCallback request_response = SingletonIO::getInstance().get_request_response_callback();
 	std::string response = (*request_response)(question, answers, default_answer);
 	return response;
 }
 
-void write_to_json()
-{
-	task_add_module_necessary_configs("mod1", "project1");
-	task_add_module_to_project_JSON("mod1", "project1");
-	task_remove_module_necessary_configs("mod1", "project1");
-	task_remove_module_from_project_JSON("mod1", "project1");
+void echo_command(std::string command) {
+	system(("echo " + command).c_str());
 }
+
+void write_to_json() {
+	task_add_software_to_path("~/godot");
+	// task_source_bashrc();
+}
+
