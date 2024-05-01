@@ -22,6 +22,9 @@ bool task_check_in_path(std::string application) {
 
 std::string task_get_user_home_path() {
 	const char* path = getenv("HOME");
+	if (std::string(path) == "/root") {
+		return "/home/" + std::string(getenv("SUDO_USER"));
+	}
 	return path ? std::string(path) : std::string();
 }
 
@@ -82,6 +85,19 @@ void task_add_module_to_project_JSON(std::string module_name, std::string projec
 	std::ofstream o(PROJECTS_JSON);
 	o << std::setw(4) << file_data << std::endl;
 }
+
+
+void task_clone_repository_branch(const std::string& repository_url, const std::string& branch,
+                                  const std::string& folder_path) {
+	std::string command = "git clone --branch " + branch + " " + repository_url + " " + folder_path;
+	run_command(command);
+}
+
+void task_remove_folder(const std::string& folder_path) {
+	std::string command = "rm -rf " + folder_path;
+	run_command(command);
+}
+
 
 std::string read_file_buffer(std::string file_path) {
 	std::ifstream sconstruct_file(file_path);
@@ -211,6 +227,11 @@ void task_remove_Sconstruct() {
 	delete_file(sconstruct_output_path);
 }
 
+void task_create_new_folder(const std::string& folder_path) {
+	std::string command = "mkdir -p " + folder_path;
+	run_command(command);
+}
+
 void task_create_new_file(std::string file_path, std::string content) {
 	std::ofstream outfile(file_path);
 	outfile << content;
@@ -283,13 +304,47 @@ std::string task_request_response(std::string question, StringVector answers, st
 	return response;
 }
 
+bool task_check_folder_exists(const std::string& folder_path) {
+	struct stat info;
+	if (stat(folder_path.c_str(), &info) != 0) {
+		return false;
+	}
+
+	if (info.st_mode & S_IFDIR) {
+		return true;
+	}
+
+	return false;
+}
+
+void task_install_prerequisites() {
+	/*
+  apt-get install \
+  build-essential \
+  scons \
+  pkg-config \
+  libx11-dev \
+  libxcursor-dev \
+  libxinerama-dev \
+  libgl1-mesa-dev \
+  libglu-dev \
+  libasound2-dev \
+  libpulse-dev \
+  libudev-dev \
+  libxi-dev \
+  libxrandr-dev*
+	 */
+	std::string prerequisites_command =
+		"apt-get install -y build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev";
+
+	run_command(prerequisites_command);
+}
+
 void echo_command(std::string command) {
 	system(("echo " + command).c_str());
 }
 
 void write_to_json() {
-	// task_install_godot();
-	// task_add_software_to_path("~/godot");
-	// task_source_bashrc();
+	// task_check_prequisites();
 }
 

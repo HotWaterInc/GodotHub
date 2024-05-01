@@ -33,6 +33,18 @@ void populate_action_dependencies(ActionsEnum action_type,
 		type_constraints = install_godot_action_type_constraints;
 		value_constraints = install_godot_action_value_constraints;
 	}
+	case ActionsEnum::INSTALL_PREREQUISITES: {
+		dependencies = install_prerequisites_action_required_dependencies;
+		optional_dependencies = install_prerequisites_action_optional_dependencies;
+		type_constraints = install_prerequisites_action_type_constraints;
+		value_constraints = install_prerequisites_action_value_constraints;
+	}
+	case ActionsEnum::INITIALIZE_STRUCTURE: {
+		dependencies = initialize_structure_action_required_dependencies;
+		optional_dependencies = initialize_structure_action_optional_dependencies;
+		type_constraints = initialize_structure_action_type_constraints;
+		value_constraints = initialize_structure_action_value_constraints;
+	}
 	}
 }
 
@@ -53,7 +65,14 @@ std::unique_ptr<ActionAbstract> get_action_object(ActionsEnum action_type) {
 	case ActionsEnum::INSTALL_GODOT:
 		action = std::make_unique<InstallGodotAction>();
 		break;
+	case ActionsEnum::INSTALL_PREREQUISITES:
+		action = std::make_unique<InstallPrerequisitesAction>();
+		break;
+	case ActionsEnum::INITIALIZE_STRUCTURE:
+		action = std::make_unique<InitializeStructureAction>();
+		break;
 	}
+
 
 	return action;
 }

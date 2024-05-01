@@ -40,6 +40,10 @@ add_executable(GodotHub
         src/actions/actions_switch_cases.h
         src/actions/actions_classes/install_godot_action.cpp
         src/actions/actions_classes/install_godot_action.h
+        src/actions/actions_classes/install_prerequisites_action.cpp
+        src/actions/actions_classes/install_prerequisites_action.h
+        src/actions/actions_classes/initialize_structure_action.cpp
+        src/actions/actions_classes/initialize_structure_action.h
 )
 
 add_custom_command(

@@ -34,4 +34,10 @@ void task_install_godot();
 void task_add_software_to_path(const std::string&);
 void task_source_bashrc();
 
+void task_install_prerequisites();
+bool task_check_folder_exists(const std::string&);
+void task_create_new_folder(const std::string&);
+void task_clone_repository_branch(const std::string&, const std::string&, const std::string&);
+void task_remove_folder(const std::string&);
+
 #endif //GODOTHUB_TASKS_H
