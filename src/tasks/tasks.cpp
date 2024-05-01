@@ -87,6 +87,12 @@ void task_add_module_to_project_JSON(std::string module_name, std::string projec
 }
 
 
+void task_clone_repository(const std::string& repository_url, const std::string& folder_path) {
+	std::string command = "git clone " + repository_url + " " + folder_path;
+	run_command(command);
+}
+
+
 void task_clone_repository_branch(const std::string& repository_url, const std::string& branch,
                                   const std::string& folder_path) {
 	std::string command = "git clone --branch " + branch + " " + repository_url + " " + folder_path;
@@ -188,6 +194,22 @@ void task_add_module_compile_module() {
 	}
 
 	std::cout << "Module compiled successfully" << std::endl;
+}
+
+std::string task_get_module_repository(const std::string& module_name) {
+	std::ifstream f(INDEXED_MODULES_JSON);
+	json file_data = json::parse(f);
+	json data = file_data["indexed_modules"];
+
+	int index = 0;
+	for (json::iterator it = data.begin(); it != data.end(); ++it, index++) {
+		std::string name = data[index]["name"];
+		if (name == module_name) {
+			return data[index]["repository"];
+		}
+	}
+
+	throw std::runtime_error("Module name: " + module_name + " does not exist in indexed modules");
 }
 
 void task_add_project_to_JSON(const std::string& project_name) {

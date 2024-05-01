@@ -42,5 +42,7 @@ void task_remove_folder(const std::string&);
 
 void task_create_new_file(const std::string&, const std::string&);
 void task_add_project_to_JSON(const std::string&);
+void task_clone_repository(const std::string&, const std::string&);
+std::string task_get_module_repository(const std::string&);
 
 #endif //GODOTHUB_TASKS_H
