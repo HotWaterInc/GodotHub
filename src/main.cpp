@@ -25,8 +25,8 @@ void setup_io(IOTypes io_type) {
 }
 
 int main(int argc, const char* argv[]) {
-	write_to_json();
-	return 0;
+	// write_to_json();
+	// return 0;
 
 	// here we set up the entire workflow, can be either CMD based or GUI based or whatever based
 	setup_io(IOTypes::CMD);

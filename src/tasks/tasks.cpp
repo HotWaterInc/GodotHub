@@ -242,16 +242,14 @@ bool task_add_software_to_path(const std::string& software_path) {
 	bashrc.close();
 	std::cout << "Path added to .bashrc successfully" << std::endl;
 
-	// Change permission of the file to ensure it's executable
-	std::string source_command = "source " + bashrc_path;
-	int res = system(source_command.c_str());
-	std::cout << res << std::endl;
-	if (res == -1) {
-		std::cerr << "Failed to source the file" << std::endl;
-		return false;
-	}
-
 	return true;
+}
+
+void task_install_godot() {
+	run_command("wget https://downloads.tuxfamily.org/godotengine/4.2.2/Godot_v4.2.2-stable_linux_headless.64.zip");
+	run_command("unzip Godot_v4.2.2-stable_linux_headless.64.zip");
+	run_command("chmod +x Godot_v4.2.2-stable_linux_headless.64");
+	run_command("mv Godot_v4.2.2-stable_linux_headless.64 /usr/local/bin/godot");
 }
 
 void task_source_bashrc() {
