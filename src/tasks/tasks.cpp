@@ -212,6 +212,31 @@ std::string task_get_module_repository(const std::string& module_name) {
 	throw std::runtime_error("Module name: " + module_name + " does not exist in indexed modules");
 }
 
+void task_list_projects() {
+	std::ifstream f(PROJECTS_JSON);
+	json file_data = json::parse(f);
+
+	for (json::iterator it = file_data.begin(); it != file_data.end(); ++it) {
+		std::cout << it.key() << std::endl;
+	}
+}
+
+void task_list_project_modules(const std::string& project_name) {
+	std::ifstream f(PROJECTS_JSON);
+	json file_data = json::parse(f);
+	json data = file_data[project_name]["modules"];
+
+	if (file_data[project_name].empty()) {
+		throw std::runtime_error("Project name: " + project_name + " does not exist");
+	}
+
+	int index = 0;
+	json modules = file_data[project_name]["modules"];
+	for (json::iterator it = data.begin(); it != data.end(); ++it, index++) {
+		std::cout << modules[index] << std::endl;
+	}
+}
+
 void task_add_project_to_JSON(const std::string& project_name) {
 	std::ifstream f(PROJECTS_JSON);
 	json file_data = json::parse(f);

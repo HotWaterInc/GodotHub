@@ -6,58 +6,47 @@
 #include "actions/registered_actions.h"
 #include "actions/actions_switch_cases.h"
 
-void validate_paramater_possible_values(std::string param_value, StringVector possible_values)
-{
+void validate_paramater_possible_values(std::string param_value, StringVector possible_values) {
 	// check if the value is in the possible values
-	if (find_string_in_vector(param_value, possible_values) == false)
-	{
+	if (find_string_in_vector(param_value, possible_values) == false) {
 		throw std::runtime_error("Invalid parameter value: " + param_value + " for possible values");
 	}
 };
 
-void validate_parameter_value_type(std::string param_value, ActionFieldTypes field_type)
-{
-	switch (field_type)
-	{
-	case ActionFieldTypes::STRING:
-		{
-			// check if the value is a string
-			if (param_value.empty())
-			{
-				throw std::runtime_error("Invalid parameter value: " + param_value + " for string type");
-			}
-			break;
+void validate_parameter_value_type(std::string param_value, ActionFieldTypes field_type) {
+	switch (field_type) {
+	case ActionFieldTypes::STRING: {
+		// check if the value is a string
+		if (param_value.empty()) {
+			throw std::runtime_error("Invalid parameter value: " + param_value + " for string type");
 		}
-	case ActionFieldTypes::INT:
-		{
-			// check if the value is an int
-			for (char c : param_value)
-				if (!isdigit(c))
-					throw std::runtime_error("Invalid parameter value: " + param_value + " for int type");
-			try
-			{
-				std::stoi(param_value);
-			}
-			catch (std::invalid_argument& e)
-			{
+		break;
+	}
+	case ActionFieldTypes::INT: {
+		// check if the value is an int
+		for (char c : param_value)
+			if (!isdigit(c))
 				throw std::runtime_error("Invalid parameter value: " + param_value + " for int type");
-			}
-			break;
+		try {
+			std::stoi(param_value);
 		}
+		catch (std::invalid_argument& e) {
+			throw std::runtime_error("Invalid parameter value: " + param_value + " for int type");
+		}
+		break;
+	}
 	}
 };
 
 bool parameter_exists(const std::string& param_name, ActionDependenciesRequiredDependencies dependencies,
-                      ActionDependenciesOptionalDependencies optional_dependencies)
-{
+                      ActionDependenciesOptionalDependencies optional_dependencies) {
 	// search in dependencies
 	bool in_required = find_string_in_vector(param_name, dependencies);
 	bool in_optional = find_string_in_vector(param_name, optional_dependencies);
 	return in_optional || in_required;
 }
 
-void validate_params(ActionDispatchParams dispatch_params)
-{
+void validate_params(ActionDispatchParams dispatch_params) {
 	// we validate the param types for each action and their values
 	ActionDependenciesRequiredDependencies dependencies;
 	ActionDependenciesOptionalDependencies optional_dependencies;
@@ -68,18 +57,15 @@ void validate_params(ActionDispatchParams dispatch_params)
 	                             type_constraints, value_constraints);
 
 	// check if all required params are present
-	for (auto const& param_name : dependencies)
-	{
+	for (auto const& param_name : dependencies) {
 		if (find_string_in_vector(param_name, dispatch_params.registered_params) == false)
 			throw std::runtime_error("Required parameter: " + param_name + " is missing");
 	}
 
-	for (auto const& param_name : dispatch_params.registered_params)
-	{
+	for (auto const& param_name : dispatch_params.registered_params) {
 		// check if param in required or optional
 		bool is_valid = parameter_exists(param_name, dependencies, optional_dependencies);
-		if (!is_valid)
-		{
+		if (!is_valid) {
 			throw std::runtime_error("Parameter: " + param_name + " is not in required or optional dependencies");
 		}
 

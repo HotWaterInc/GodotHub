@@ -12,5 +12,7 @@
 #include <actions/actions_classes/install_prerequisites_action.h>
 #include <actions/actions_classes/initialize_structure_action.h>
 #include <actions/actions_classes/create_project_action.h>
+#include <actions/actions_classes/list_projects_action.h>
+#include <actions/actions_classes/list_project_modules_action.h>
 
 #endif //ACTIONS_REGISTERED_H

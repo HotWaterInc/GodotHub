@@ -32,24 +32,43 @@ void populate_action_dependencies(ActionsEnum action_type,
 		optional_dependencies = install_godot_action_optional_dependencies;
 		type_constraints = install_godot_action_type_constraints;
 		value_constraints = install_godot_action_value_constraints;
+		break;
 	}
 	case ActionsEnum::INSTALL_PREREQUISITES: {
 		dependencies = install_prerequisites_action_required_dependencies;
 		optional_dependencies = install_prerequisites_action_optional_dependencies;
 		type_constraints = install_prerequisites_action_type_constraints;
 		value_constraints = install_prerequisites_action_value_constraints;
+		break;
 	}
 	case ActionsEnum::INITIALIZE_STRUCTURE: {
 		dependencies = initialize_structure_action_required_dependencies;
 		optional_dependencies = initialize_structure_action_optional_dependencies;
 		type_constraints = initialize_structure_action_type_constraints;
 		value_constraints = initialize_structure_action_value_constraints;
+		break;
 	}
 	case ActionsEnum::CREATE_PROJECT: {
 		dependencies = create_project_action_required_dependencies;
 		optional_dependencies = create_project_action_optional_dependencies;
 		type_constraints = create_project_action_type_constraints;
 		value_constraints = create_project_action_value_constraints;
+		break;
+	}
+
+	case ActionsEnum::LIST_PROJECTS: {
+		dependencies = list_projects_action_required_dependencies;
+		optional_dependencies = list_projects_action_optional_dependencies;
+		type_constraints = list_projects_action_type_constraints;
+		value_constraints = list_projects_action_value_constraints;
+		break;
+	}
+	case ActionsEnum::LIST_PROJECT_MODULES: {
+		dependencies = list_project_modules_action_required_dependencies;
+		optional_dependencies = list_project_modules_action_optional_dependencies;
+		type_constraints = list_project_modules_action_type_constraints;
+		value_constraints = list_project_modules_action_value_constraints;
+		break;
 	}
 	}
 }
@@ -79,6 +98,12 @@ std::unique_ptr<ActionAbstract> get_action_object(ActionsEnum action_type) {
 		break;
 	case ActionsEnum::CREATE_PROJECT:
 		action = std::make_unique<CreateProjectAction>();
+		break;
+	case ActionsEnum::LIST_PROJECTS:
+		action = std::make_unique<ListProjectAction>();
+		break;
+	case ActionsEnum::LIST_PROJECT_MODULES:
+		action = std::make_unique<ListProjectModulesAction>();
 		break;
 	}
 
